@@ -51,7 +51,7 @@ def count_clicks(token, short_link, version="5.199"):
         "access_token": token,
         "v": version,
         "key": key,
-        "interval": "day"
+        "interval": "forever"
     }
 
     try:
