@@ -6,8 +6,8 @@ from urllib.parse import urlparse
 
 def is_short_link(token, url, version="5.199"):
     api_url = 'https://api.vk.ru/method/utils.getLinkStats'
-    parse = urlparse(url)
-    key = parse.path.lstrip("/")
+    url_components = urlparse(url)
+    key = url_components.path.lstrip("/")
     if not key:
         return False
     params = {
@@ -39,7 +39,6 @@ def shorten_link(token, url, version="5.199"):
     response.raise_for_status()
     link = response.json()
     if 'error' in link:
-        print("Неправильная ссылка")
         raise ValueError(
             f"{link['error']['error_msg']}\n"
             f"Код ошибки: {link['error']['error_code']}"
@@ -48,8 +47,8 @@ def shorten_link(token, url, version="5.199"):
 
 
 def count_clicks(token, short_link, version="5.199"):
-    parsed = urlparse(short_link)
-    key = parsed.path.lstrip("/")
+    url_components = urlparse(short_link)
+    key = url_components.path.lstrip("/")
     api_url = 'https://api.vk.ru/method/utils.getLinkStats'
     params = {
         "access_token": token,
